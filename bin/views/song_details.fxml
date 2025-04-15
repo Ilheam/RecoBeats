@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="controllers.SongDetailsController" spacing="20">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Section en haut avec le logo -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <ImageView fx:id="logo" fitHeight="40" fitWidth="40"/>
+        <Text fx:id="songTitle" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Section avec l'image du morceau, et les boutons Play/Pause -->
+    <HBox spacing="20" alignment="CENTER">
+        <ImageView fx:id="trackImage" fitHeight="200" fitWidth="200" preserveRatio="true"/>
+        <VBox spacing="10" alignment="CENTER">
+            <MediaView fx:id="mediaView" fitHeight="300" fitWidth="300" preserveRatio="true"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Play" onAction="#handlePlay" style="-fx-font-size: 14px;"/>
+                <Button text="Pause" onAction="#handlePause" style="-fx-font-size: 14px;"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <!-- Section d'actions pour ajouter aux favoris ou playlist -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button text="Ajouter aux favoris" onAction="#handleAddToFavorites"/>
+        <Button text="Ajouter à une playlist" onAction="#handleAddToPlaylist"/>
+    </HBox>
+
+    <!-- Section des autres morceaux -->
+    <Label text="Autres morceaux" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <ListView fx:id="otherTracksList" prefHeight="200" prefWidth="600"/>
+</VBox>
