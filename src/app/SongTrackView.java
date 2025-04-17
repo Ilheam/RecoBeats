@@ -18,6 +18,9 @@ public class SongTrackView extends Application {
     	    System.out.println("FXML chargé avec succès !");
 
     	    Scene scene = new Scene(root, 800, 600);
+    	    
+            //scene.getStylesheets().add(getClass().getResource("/assets/styles/style.css").toExternalForm());
+
     	    primaryStage.setTitle("RecoBeats 🎵");
     	    primaryStage.setScene(scene);
     	    primaryStage.show();

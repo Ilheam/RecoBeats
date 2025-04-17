@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.LoginAdminController"
+ stylesheets="@../styles/admin.css">
+    <children>
+        <VBox spacing="15" alignment="CENTER" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="50">
+            <Label text="Connexion Admin" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <TextField fx:id="usernameField" promptText="Nom d'utilisateur" />
+            <PasswordField fx:id="passwordField" promptText="Mot de passe" />
+            <Button text="Se connecter" onAction="#handleLogin" />
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,14 +1,18 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import models.Song;
 import services.SongService;
 
@@ -17,9 +21,13 @@ import java.util.List;
 public class SongDetailsController {
 
     @FXML private MediaView mediaView;
-    @FXML private ImageView trackImage;
     @FXML private Text songTitle;
-    @FXML private ImageView logo;
+    @FXML private ImageView trackImage;
+    @FXML private Text artistName;
+    @FXML private Text genre;
+    @FXML private Text year;
+    @FXML private Text duration;
+   // @FXML private ImageView logo;
     @FXML private ListView<Song> otherTracksList; // Changer le type de ListView pour Song
     
     private MediaPlayer mediaPlayer;
@@ -27,7 +35,7 @@ public class SongDetailsController {
     private Song currentSong;
 
     public SongDetailsController() {
-        System.out.println("🎯 Contrôleur initialisé !");
+        System.out.println(" Contrôleur de détails de chanson initialisé.");
     }
 
     @FXML
@@ -44,30 +52,57 @@ public class SongDetailsController {
 
     private void initSongDetails(Song song) {
         // Affiche le titre de la chanson
-        songTitle.setText(song.getTrack_name() + " - " + song.getArtist_name());
-
+    	songTitle.setText(song.getTrack_name());
+        artistName.setText("Artist: " + song.getArtist_name());
+        
         // Charge l'image du morceau
         String imageUrl = song.getImg_url(); // Assurez-vous que cette méthode renvoie l'URL ou le chemin de l'image
         trackImage.setImage(new Image(imageUrl));
 
+        
+     // Afficher le genre et l'année
+        genre.setText("Genre: " + song.getGenre());
+        year.setText("Year: " + song.getYear());
+        
+     // Afficher la durée en minutes et secondes
+        int minutes = song.getDuration_ms() / 60000;
+        int seconds = (song.getDuration_ms() % 60000) / 1000;
+        duration.setText("Duration: " + minutes + "m " + seconds + "s");
+        
+        
         // Charge le logo de l'application (peut-être une image statique)
-        logo.setImage(new Image("file:/C:/Users/Hp/Desktop/ENSIASD/SEMESTER2/JAVA/PROJECT/JAVA_PROJECT/bin/ressources/assets/images/RECOBEATS.png"));
+       // logo.setImage(new Image("file:/C:/Users/Hp/Desktop/ENSIASD/SEMESTER2/JAVA/PROJECT/JAVA_PROJECT/bin/ressources/assets/images/RECOBEATS.png"));
 
         // Lancer la musique avec son preview_url
         playSong(song);
     }
 
     private void playSong(Song song) {
+        // Si une chanson est déjà en cours de lecture, on l'arrête avant de jouer une nouvelle chanson
+        if (mediaPlayer != null) {
+            mediaPlayer.stop(); // Arrêter le lecteur audio existant
+        }
+
         String previewUrl = song.getPreview_url();
         try {
+            // Créer un nouvel objet Media pour la chanson sélectionnée
             Media media = new Media(previewUrl);
+            
+            // Créer un nouveau MediaPlayer pour cette chanson
             mediaPlayer = new MediaPlayer(media);
+            
+            // Associer le MediaPlayer au MediaView pour la lecture
             mediaView.setMediaPlayer(mediaPlayer);
-            mediaPlayer.play();
+            
+            // Démarrer la lecture de la chanson
+            mediaPlayer.pause();
         } catch (Exception e) {
             System.out.println("Erreur lors de la lecture de la musique : " + e.getMessage());
         }
     }
+
+    
+   
 
     @FXML
     public void handlePlay() {
@@ -117,6 +152,14 @@ public class SongDetailsController {
 
                     hBox.getChildren().addAll(songImage, songText);
                     setGraphic(hBox);
+
+                    // Ajoute un gestionnaire d'événements pour le clic
+                    setOnMouseClicked(event -> {
+                        if (song != null) {
+                            // Appel de la méthode pour afficher les détails de la chanson dans la même page
+                            displaySongDetails(song);
+                        }
+                    });
                 }
             }
         });
@@ -125,5 +168,41 @@ public class SongDetailsController {
         for (int i = 0; i < Math.min(10, otherSongs.size()); i++) {
             otherTracksList.getItems().add(otherSongs.get(i));
         }
+    }
+
+    
+   
+    
+    
+    private void displaySongDetails(Song song) {
+        // Mettre à jour les informations de la chanson dans les composants FXML
+        songTitle.setText(song.getTrack_name());
+        artistName.setText(song.getArtist_name());
+        genre.setText(String.valueOf(song.getGenre()));
+        year.setText(String.valueOf(song.getYear()));
+        duration.setText(formatDuration(song.getDuration_ms())); // Format de la durée si nécessaire
+
+        // Charger l'image de la chanson
+        trackImage.setImage(new Image(song.getImg_url()));
+
+        // Arrêter l'ancienne chanson si elle est en cours de lecture
+        if (mediaPlayer != null) {
+            mediaPlayer.stop(); // Arrêter l'ancien MediaPlayer
+        }
+
+        // Charger la musique de la nouvelle chanson
+        Media media = new Media(song.getPreview_url());
+        mediaPlayer = new MediaPlayer(media); // Créer un nouveau MediaPlayer pour cette chanson
+        mediaView.setMediaPlayer(mediaPlayer); // Associer le nouveau MediaPlayer au MediaView
+        mediaPlayer.play(); // Démarrer la lecture de la nouvelle chanson
+    }
+
+
+    
+ // Méthode pour formater la durée en minutes:secondes
+    private String formatDuration(int durationInMs) {
+        int minutes = (durationInMs / 1000) / 60;
+        int seconds = (durationInMs / 1000) % 60;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 }

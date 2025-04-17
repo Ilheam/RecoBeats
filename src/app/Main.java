@@ -1,5 +1,6 @@
 package app;
 
+import controllers.UserController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +10,15 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
+    
     public void start(Stage primaryStage) throws Exception {
+        // Charger le fichier FXML
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
+    	Parent root = loader.load();
+    	Stage stage = new Stage();
+    	stage.setScene(new Scene(root));
+    	stage.show();
 
-    	Parent root = FXMLLoader.load(getClass().getResource("/views/song_details.fxml"));
-        primaryStage.setTitle("RecoBeats - Détails de la chanson");
-        primaryStage.setScene(new Scene(root, 400, 300));
-        primaryStage.show();
     }
 
     public static void main(String[] args) {

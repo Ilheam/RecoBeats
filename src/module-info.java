@@ -6,6 +6,11 @@ module JAVA_PROJECT {
 	requires javafx.graphics;
     
   
+	requires mysql.connector.j;
+	requires transitive jbcrypt;
+	requires javafx.base;
+
+	
     exports app; 
     exports controllers;
     

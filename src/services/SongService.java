@@ -9,6 +9,9 @@ import models.Song;
 import database.DBConnection;
 
 public class SongService {
+	
+    private List<Song> songs;
+
 
     // Récupère toutes les chansons
 	public List<Song> getAllSongs() {
@@ -158,5 +161,40 @@ public class SongService {
             e.printStackTrace();
         }
         return song;
+    }
+    
+ // Méthode pour rechercher des chansons par titre ou artiste
+    public List<Song> searchSongs(String query) {
+        List<Song> filteredSongs = new ArrayList<>();
+
+        for (Song song : songs) {
+            // Recherche par titre ou artiste, ignorer la casse
+            if (song.getTrack_name().toLowerCase().contains(query) || song.getArtist_name().toLowerCase().contains(query)) {
+                filteredSongs.add(song);
+            }
+        }
+
+        return filteredSongs;
+    }
+    
+    
+    public boolean songExists(String songName) {
+        String query = "SELECT COUNT(*) FROM tracks WHERE LOWER(track_name) = LOWER(?)";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setString(1, songName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

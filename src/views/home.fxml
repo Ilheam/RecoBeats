@@ -1,1 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.HomeController"
+            prefWidth="800" prefHeight="600"
+            style="-fx-background-color: #F0F8FF;"> <!-- Fond bleu clair -->
+
+    <!-- Titre -->
+    <Label text="Bienvenue sur Recobeats"
+           layoutX="20" layoutY="20"
+           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+    <!-- Conteneur de chansons -->
+    <ScrollPane layoutX="20" layoutY="70" prefWidth="760" prefHeight="500">
+        <HBox fx:id="songListContainer"
+              spacing="10"
+              alignment="CENTER_LEFT"
+              style="-fx-padding: 10;">
+            <!-- Les chansons seront ajoutées ici dynamiquement -->
+        </HBox>
+    </ScrollPane>
+
+</AnchorPane>
