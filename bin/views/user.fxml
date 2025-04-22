@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.MouseEvent?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns:fx="http://javafx.com/javafx"
+            xmlns="http://javafx.com/fxml"
+            fx:controller="controllers.UserController"
+            stylesheets="@../styles/user.css"> <!-- Lien vers le fichier CSS -->
+
+    <!-- Sidebar (Left) -->
+    <left>
+       <VBox fx:id="sidebar" styleClass="sidebar">
+            <!-- Back Arrow in the Sidebar, now at the top-left -->
+            <Button text="&#8592;" styleClass="back-button" onAction="#goBack"/>
+
+            <!-- Sidebar Buttons -->
+            <Button text="Historique" styleClass="sidebar-button"/>
+            <Button text="Playlist" styleClass="sidebar-button"/>
+            <Button text="Favoris" styleClass="sidebar-button"/>
+        </VBox>
+    </left>
+
+    <!-- Main content (Right) -->
+    <center>
+        <VBox styleClass="main-content" spacing="15" alignment="TOP_LEFT">
+            <!-- Profile HBox with Circle, Username, and Edit Button -->
+            <HBox spacing="20" styleClass="profile-hbox" alignment="CENTER_LEFT">
+                <!-- Profile Image (Circle) -->
+               <StackPane>
+                    <Circle fx:id="profileImageCircle" radius="50" styleClass="profile-image"/>
+                    <Text fx:id="profileInitialText" styleClass="profile-initial"/>
+                </StackPane>
+
+                <VBox styleClass="user-info">
+                    <!-- Dynamic display for first name, last name, and username -->
+                    <Label fx:id="firstNameLabel" styleClass="user-name"/>
+                    <Label fx:id="lastNameLabel" styleClass="user-name"/>
+                    <Label fx:id="usernameLabel" styleClass="user-handle"/>
+                    <Button text="edit"  onAction="#handleEditButtonAction" styleClass="edit-button"/>
+                </VBox>
+                
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

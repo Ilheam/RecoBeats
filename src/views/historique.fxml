@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.HistoriqueController">
+    <children>
+        <TableView fx:id="tableViewHistorique" layoutX="14.0" layoutY="14.0" prefWidth="600.0" prefHeight="400.0">
+            <columns>
+                <TableColumn fx:id="colNom" text="Nom de la chanson" prefWidth="200"/>
+                <TableColumn fx:id="colArtiste" text="Artiste" prefWidth="200"/>
+                <TableColumn fx:id="colPlaycount" text="Nombre d'écoutes" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>
+

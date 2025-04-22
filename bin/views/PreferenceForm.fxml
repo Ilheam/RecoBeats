@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane fx:controller="controllers.PreferenceController" xmlns:fx="http://javafx.com/fxml" prefWidth="600" prefHeight="700">
+    <children>
+        <VBox spacing="12" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+            <Label text="Formulaire de préférences musicales" style="-fx-font-size: 18;" />
+
+            <ComboBox fx:id="genreComboBox" promptText="Genre préféré" />
+            <ComboBox fx:id="yearComboBox" promptText="Année / décennie préférée" />
+
+            <Label text="Durée souhaitée :" />
+            <HBox spacing="10">
+                <RadioButton fx:id="courteRadio" text="Courte" toggleGroup="$durationGroup" />
+                <RadioButton fx:id="normaleRadio" text="Normale" toggleGroup="$durationGroup" />
+                <RadioButton fx:id="longueRadio" text="Longue" toggleGroup="$durationGroup" />
+            </HBox>
+
+            <Label text="Énergie" />
+            <Slider fx:id="energySlider" min="0" max="1" blockIncrement="0.01" />
+
+            <Label text="Danceabilité" />
+            <Slider fx:id="danceabilitySlider" min="0" max="1" blockIncrement="0.01" />
+
+            <Label text="Acoustique" />
+            <Slider fx:id="acousticnessSlider" min="0" max="1" blockIncrement="0.01" />
+
+            <Label text="Instrumentalité" />
+            <Slider fx:id="instrumentalnessSlider" min="0" max="1" blockIncrement="0.01" />
+
+            <Label text="Valence (tristesse/joie)" />
+            <Slider fx:id="valenceSlider" min="0" max="1" blockIncrement="0.01" />
+
+            <Label text="Voix / Chant" />
+            <HBox spacing="10">
+                <RadioButton fx:id="vocalRadio" text="Chantée" toggleGroup="$vocalGroup" />
+                <RadioButton fx:id="instrumentalRadio" text="Instrumentale" toggleGroup="$vocalGroup" />
+            </HBox>
+
+            <Label text="Présence de voix (speechiness)" />
+            <Slider fx:id="speechinessSlider" min="0" max="1" blockIncrement="0.01" />
+
+            <Button fx:id="submitButton" text="Valider" onAction="#handleSubmitPreferences" />
+        </VBox>
+    </children>
+</AnchorPane>
+
+

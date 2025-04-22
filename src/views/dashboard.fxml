@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminDashboardController" 
+stylesheets="@../styles/dashbord.css">
+
+    <!-- Conteneur principal -->
+    <VBox spacing="10" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" >
+        
+        <!-- Titre -->
+        <Label text="Dashboard Administrateur" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+        <!-- TableView pour afficher la liste des utilisateurs -->
+        <TableView fx:id="userTable" VBox.vgrow="ALWAYS">
+            <columns>
+            
+                <!-- Colonne pour afficher l'ID -->
+                <TableColumn fx:id="idCol" text="ID" prefWidth="100" />
+
+                <!-- Colonne pour afficher le nom -->
+                <TableColumn fx:id="nomCol" text="Nom" prefWidth="150"/>
+
+                <!-- Colonne pour afficher le prénom -->
+                <TableColumn fx:id="prenomCol" text="Prénom" prefWidth="150"/>
+
+                <!-- Colonne pour afficher le nom d'utilisateur -->
+                <TableColumn fx:id="usernameCol" text="Nom d'utilisateur" prefWidth="200"/>
+
+                <!-- Colonne pour l'action (bouton de suppression) -->
+                <TableColumn fx:id="actionCol" text="Action" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>

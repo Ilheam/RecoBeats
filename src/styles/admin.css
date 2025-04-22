@@ -1,0 +1,46 @@
+/* admin.css */
+
+.root {
+	-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e9d5ec);
+
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.label {
+    -fx-text-fill: #2f3e46;
+}
+
+.text-field, .password-field {
+    -fx-pref-width: 220px; /* Taille réduite */
+    -fx-padding: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #b0bec5;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-font-size: 13px;
+    -fx-text-fill: #37474f;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #ba68c8; /* Violet clair */
+    -fx-effect: dropshadow(three-pass-box, rgba(186,104,200,0.3), 8, 0, 0, 4);
+}
+
+.button {
+    -fx-background-color: #ce93d8; /* Violet clair */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 18 10 18;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+}
+
+.button:hover {
+    -fx-background-color: #ba68c8; /* Violet un peu plus intense */
+}
+
+.button:pressed {
+    -fx-background-color: #ab47bc; /* Violet foncé */
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.SongViewController"
+            stylesheets="@../styles/dashbord.css">
+
+    <children>
+    
+        <!-- Barre de recherche en haut -->
+        <HBox spacing="10" layoutX="20" layoutY="10" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10">
+            <TextField fx:id="searchField" promptText="Entrer le nom de la chanson..." />
+            <Button text="Rechercher" onAction="#onSearchClicked"/>
+        </HBox>
+
+        <!-- Tableau de chansons -->
+        <TableView fx:id="tableSongs"
+                   AnchorPane.leftAnchor="10"
+                   AnchorPane.rightAnchor="10"
+                   AnchorPane.topAnchor="50"
+                   AnchorPane.bottomAnchor="10">
+            <columns>
+                <TableColumn fx:id="colId" text="ID"/>
+                <TableColumn fx:id="colName" text="Nom"/>
+                <TableColumn fx:id="colArtist" text="Artiste"/>
+                <TableColumn fx:id="colGenre" text="Genre"/>
+                <TableColumn fx:id="colYear" text="Année"/>
+                <TableColumn fx:id="colDuration" text="Durée"/>
+                <TableColumn fx:id="deleteColumn" text="Supprimer"/>
+            </columns>
+        </TableView>
+
+    </children>
+</AnchorPane>
