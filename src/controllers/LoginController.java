@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+
+import helpers.SongSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +16,6 @@ import models.User; // Assurez-vous d'importer le modèle User
 import services.LoginService;
 import services.UserService; // Assurez-vous d'importer le service UserService
 import services.Session; // Assurez-vous d'importer le service Session
-
 public class LoginController {
 
     @FXML
@@ -28,42 +29,41 @@ public class LoginController {
 
     @FXML
     private void handleLogin(ActionEvent event) {
-        // Récupération des valeurs saisies par l'utilisateur
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Vérification que les champs ne sont pas vides
         if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Veuillez remplir tous les champs !");
-            return; // Sortie de la méthode si les champs sont vides
+            showAlert(Alert.AlertType.ERROR, "Veuillez remplir tous les champs.");
+            return;
         }
 
-        // Authentification de l'utilisateur
         boolean isAuthenticated = loginService.authenticateUser(username, password);
 
-        // Vérification du résultat de l'authentification
         if (isAuthenticated) {
-            // Récupérer l'utilisateur après authentification
-            User user = userService.getUserByUsername(username); // Assurez-vous que cette méthode existe
+            // Get the User object from the username
+            User user = userService.getUserByUsername(username);
+
             if (user != null) {
-                Session.setCurrentUser(user); // Mettre à jour la session avec l'utilisateur connecté
+                // 🔥 Store the user ID in session
+                SongSession.getInstance().setCurrentUserId(user.getUserId());
+
+                // Switch to the home.fxml scene
                 try {
-                    // Chargement de l'écran de profil
-                    Parent profileRoot = FXMLLoader.load(getClass().getResource("/views/user.fxml"));
+                    Parent profileRoot = FXMLLoader.load(getClass().getResource("/views/home.fxml"));
                     Stage stage = (Stage) usernameField.getScene().getWindow();
                     stage.setScene(new Scene(profileRoot));
                 } catch (IOException e) {
-                    e.printStackTrace(); // Affichage de l'erreur dans la console
+                    e.printStackTrace();
                     showAlert(Alert.AlertType.ERROR, "Impossible de charger l'écran de profil.");
                 }
             } else {
-                showAlert(Alert.AlertType.ERROR, "Erreur lors de la récupération des informations de l'utilisateur.");
+                showAlert(Alert.AlertType.ERROR, "Utilisateur introuvable.");
             }
         } else {
-            // Alerte en cas d'échec de l'authentification
             showAlert(Alert.AlertType.ERROR, "Nom d'utilisateur ou mot de passe incorrect.");
         }
     }
+
 
     @FXML
     private void handleRegisterButton(ActionEvent event) {

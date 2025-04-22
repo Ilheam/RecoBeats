@@ -25,6 +25,8 @@ public class Song {
     private int time_signature;
     private String img_url;
     
+    private double similarity;
+    
     
     
 	public Song(int track_id, String track_name, String artist_name, String preview_url, String tags, Genre genre,
@@ -54,6 +56,14 @@ public class Song {
 		this.img_url = img_url;
 	}
 	
+	
+	public void setSimilarity(double similarity) {
+	    this.similarity = similarity;
+	}
+
+	public double getSimilarity() {
+	    return similarity;
+	}
 	
 	public int getTrack_id() {
 		return track_id;
@@ -193,6 +203,17 @@ public class Song {
 	@Override
     public String toString() {
         return track_name + " : " + artist_name;
+    }
+	
+	public double[] getFeatureVector() {
+        return new double[] {
+            danceability,
+            energy,
+            acousticness,
+            instrumentalness,
+            valence,
+            speechiness
+        };
     }
 
 }

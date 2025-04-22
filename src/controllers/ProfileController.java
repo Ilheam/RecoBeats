@@ -29,28 +29,26 @@ public class ProfileController {
         if (currentUser != null) {
             firstNameField.setText(currentUser.getFirstName());
             lastNameField.setText(currentUser.getLastName());
-            userNameField.setText(currentUser.getUserName());
+          
         }
     }
 
-   
     @FXML
     private void handleUpdateProfile() {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
-        String username = userNameField.getText();
-      
+
         // Vérification que tous les champs nécessaires sont remplis
-        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty()) {
+        if (firstName.isEmpty() || lastName.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Veuillez remplir tous les champs !");
             return;
         }
 
         User currentUser = Session.getCurrentUser();
         if (currentUser != null) {
-            // On met à jour seulement le prénom, le nom et le nom d'utilisateur, en conservant le mot de passe actuel
+            // Mise à jour seulement du prénom et du nom
             boolean isUpdated = userService.updateUserProfile(
-                currentUser.getUserId(), firstName, lastName, username, currentUser.getPassword()
+                currentUser.getUserId(), firstName, lastName
             );
 
             if (isUpdated) {

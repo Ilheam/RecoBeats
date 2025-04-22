@@ -19,8 +19,7 @@
         
         <TextField fx:id="firstNameField" promptText="Prénom" />
         <TextField fx:id="lastNameField" promptText="Nom" />
-        <TextField fx:id="userNameField" promptText="Nom d'utilisateur" />
-    
+       
         <Button text="Mettre à jour" onAction="#handleUpdateProfile"/>
     </VBox>
 </AnchorPane>

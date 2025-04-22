@@ -3,66 +3,51 @@ package services;
 
 import java.sql.*;
 import java.util.*;
-
-import models.Favorite;
+import models.*;
 
 import database.DBConnection;
 
 public class FavoriteService {
-	
-	public void addSongToFavorites(int userId, int trackId) {
-        String query = "INSERT INTO playlist_songs (id_playlist, id_track) SELECT id_playlist, ? " +
-                       "FROM favorites WHERE user_id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+    private Connection connection;
 
-            statement.setInt(1, trackId);
-            statement.setInt(2, userId);
+    public FavoriteService() {
+        try {
+			this.connection = DBConnection.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void addToFavorites(int userId, int trackId) throws SQLException {
+        String sql = "INSERT IGNORE INTO favorites (id_user, id_track) VALUES (?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, trackId);
+            stmt.executeUpdate();
         }
     }
-	
-	public List<Favorite> getAllFavorites() {
-        List<Favorite> favorites = new ArrayList<>();
-        String query = "SELECT * FROM favorites"; 
 
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
+    public void removeFromFavorites(int userId, int trackId) throws SQLException {
+        String sql = "DELETE FROM favorites WHERE id_user = ? AND id_track = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, trackId);
+            stmt.executeUpdate();
+        }
+    }
 
-            while (resultSet.next()) {
-                int userId = resultSet.getInt("user_id");
-                
-                Favorite favorite = new Favorite(userId);
-                favorites.add(favorite);
+    public List<Integer> getFavoritesTrackIds(int userId) throws SQLException {
+        List<Integer> trackIds = new ArrayList<>();
+        String sql = "SELECT id_track FROM favorites WHERE id_user = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                trackIds.add(rs.getInt("id_track"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return favorites;
+        return trackIds;
     }
-	
-	
-    public void deleteFavorite(int id) {
-        String query = "DELETE FROM favorites WHERE id = ?";
-
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	
-	
-	
 }
-
-

@@ -2,7 +2,7 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -43,37 +43,34 @@ public class RegisterController {
         }
 
         User newUser = new User(nom, prenom, username, password);
-
         UserService userService = new UserService();
+
         if (userService.addUser(newUser)) {
             User savedUser = userService.getUserByUsername(username);
-
             Session.setCurrentUser(savedUser);
 
             try {
-            	goToProfile();
+                goToPreferenceForm(savedUser);
             } catch (Exception e) {
                 e.printStackTrace();
-                showAlert("Erreur", "Impossible de charger la page de profil !");
+                showAlert("Erreur", "Impossible de charger le formulaire de préférences !");
             }
         } else {
             showAlert("Erreur", "Échec de l'enregistrement. Veuillez réessayer.");
         }
     }
 
+    private void goToPreferenceForm(User user) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/PreferenceForm.fxml"));
+        Parent root = loader.load();
 
-    private void goToProfile() {
-        try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/views/user.fxml"));
-            javafx.scene.Parent root = loader.load();
-            javafx.stage.Stage stage = (javafx.stage.Stage) firstNameField.getScene().getWindow();
-            stage.setScene(new javafx.scene.Scene(root));
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Erreur", "Impossible de charger la page de profil !");
-        }
+        PreferenceController controller = loader.getController();
+        controller.setUserId(user.getUserId()); // envoie l'ID au contrôleur de préférences
+
+        Stage stage = (Stage) firstNameField.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
-
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

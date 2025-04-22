@@ -1,51 +1,51 @@
 package controllers;
 
 
-
-import models.Playlist;
 import services.PlaylistService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import models.Playlist;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public class PlaylistController {
 
-    @FXML
-    private ListView<Playlist> playlistListView;
-    
-    @FXML
-    private TextField playlistNameField;
-    
-    private PlaylistService playlistService = new PlaylistService(); 
-    
-    private ObservableList<Playlist> playlists = FXCollections.observableArrayList();
-    
-    public void initialize() {// recup des playlists existantes
-    	
-        playlists.setAll(playlistService.getAllPlaylists());
-        playlistListView.setItems(playlists);
+    private PlaylistService playlistService;
+
+    public PlaylistController() {
+        this.playlistService = new PlaylistService();
     }
-    
-    @FXML
-    public void addPlaylist() {
-        String playlistName = playlistNameField.getText();
-        if (!playlistName.isEmpty()) {
-            Playlist newPlaylist = new Playlist(playlistName, 1); // Le 1 ici représente l'id de l'utilisateur, à remplacer dynamiquement.
-            playlistService.addPlaylist(newPlaylist);
-            playlists.add(newPlaylist);
-            playlistNameField.clear();
+
+    public int createNewPlaylist(String name, int userId) {
+        try {
+            return playlistService.createPlaylist(name, userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
-    
-    @FXML
-    public void deletePlaylist() {
-        Playlist selectedPlaylist = playlistListView.getSelectionModel().getSelectedItem();
-        if (selectedPlaylist != null) {
-            playlistService.deletePlaylist(selectedPlaylist.getId_playlist());
-            playlists.remove(selectedPlaylist);
+
+    public void addTrackToPlaylist(int playlistId, int trackId) {
+        try {
+            playlistService.addSongToPlaylist(playlistId, trackId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeTrackFromPlaylist(int playlistId, int trackId) {
+        try {
+            playlistService.removeSongFromPlaylist(playlistId, trackId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Playlist> getUserPlaylists(int userId) {
+        try {
+            return playlistService.getUserPlaylists(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
-

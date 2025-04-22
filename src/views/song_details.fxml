@@ -44,8 +44,8 @@
                         style="-fx-background-color: #535353; -fx-text-fill: white;
                                -fx-background-radius: 30; -fx-padding: 10 20;"/>
             </HBox>
-
-            <!-- Actions utilisateur -->
+            
+            <!-- Boutons d'action dans le fichier .fxml -->
             <HBox spacing="20" alignment="CENTER_LEFT">
                 <Button text="♡ Ajouter aux favoris" onAction="#handleAddToFavorites"
                         style="-fx-background-color: transparent; -fx-text-fill: white;
@@ -54,6 +54,9 @@
                         style="-fx-background-color: transparent; -fx-text-fill: white;
                                -fx-border-color: white; -fx-border-radius: 30; -fx-padding: 8 15;"/>
             </HBox>
+            
+
+            
         </VBox>
     </HBox>
 

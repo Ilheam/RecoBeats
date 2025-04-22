@@ -45,29 +45,28 @@ public class UserService {
 	}
 
 	// Récupérer un utilisateur par son nom d'utilisateur
-	public User getUserByUsername(String username) {
-	    String query = "SELECT * FROM users WHERE username = ?";
-	    try (Connection conn = DBConnection.getConnection();
-	         PreparedStatement stmt = conn.prepareStatement(query)) {
-	        stmt.setString(1, username);
-	        ResultSet rs = stmt.executeQuery();
-	        if (rs.next()) {
-	            return new User(
-	                rs.getInt("id_user"),
-	                rs.getString("prenom"),
-	                rs.getString("nom"),
-	                rs.getString("username"),
-	                rs.getString("passwd")
-	            );
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return null;
-	}
+		public User getUserByUsername(String username) {
+		    String query = "SELECT * FROM users WHERE username = ?";
+		    try (Connection conn = DBConnection.getConnection();
+		         PreparedStatement stmt = conn.prepareStatement(query)) {
+		        stmt.setString(1, username);
+		        ResultSet rs = stmt.executeQuery();
+		        if (rs.next()) {
+		            return new User(
+		                rs.getInt("id_user"),
+		                rs.getString("prenom"),
+		                rs.getString("nom"),
+		                rs.getString("username"),
+		                rs.getString("passwd")
+		            );
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return null;
+		}
 
-
-
+	
 
 
     // Récupérer le profil de base (infos personnelles uniquement)
@@ -97,21 +96,15 @@ public class UserService {
     }
 
 
+    public boolean updateUserProfile(int userId, String firstName, String lastName) {
+        String query = "UPDATE users SET nom = ?, prenom = ? WHERE id_user = ?";
 
-    public boolean updateUserProfile(int userId, String firstName, String lastName, String userName, String password) {
-        String query = "UPDATE users SET nom = ?, prenom = ?, username = ?, passwd = ? WHERE id_user = ?";
-        
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            // Hashing the password before updating
-            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-
-            statement.setString(1, firstName);
-            statement.setString(2, lastName);
-            statement.setString(3, userName);
-            statement.setString(4, hashedPassword);  // Update with hashed password
-            statement.setInt(5, userId);
+            statement.setString(1, lastName);
+            statement.setString(2, firstName);
+            statement.setInt(3, userId);
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -120,6 +113,7 @@ public class UserService {
 
         return false;
     }
+
 
 
 

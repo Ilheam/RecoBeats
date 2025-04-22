@@ -1,5 +1,6 @@
 package app;
 
+import controllers.SongDetailsController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +16,7 @@ public class SongTrackView extends Application {
 
     	    System.out.println("Chargement de l'interface FXML...");
     	    Parent root = FXMLLoader.load(getClass().getResource("/views/song_details.fxml"));
+    	    
     	    System.out.println("FXML chargé avec succès !");
 
     	    Scene scene = new Scene(root, 800, 600);

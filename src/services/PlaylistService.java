@@ -1,93 +1,71 @@
 package services;
 
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import models.*;
 
 import database.DBConnection;
 
 public class PlaylistService {
 
-    
-    public void addPlaylist(Playlist playlist) {
-        String query = "INSERT INTO playlists (name, user_id) VALUES (?, ?)";
+    private Connection connection;
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+    public PlaylistService()  {
+        try {
+			this.connection = DBConnection.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 
-            statement.setString(1, playlist.getName());
-            statement.setInt(2, playlist.getUser_id());
+    public int createPlaylist(String name, int userId) throws SQLException {
+        String sql = "INSERT INTO playlist (name, id_user) VALUES (?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, name);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
 
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1); // return id_playlist
+            }
+        }
+        return -1;
+    }
+
+    public void addSongToPlaylist(int playlistId, int trackId) throws SQLException {
+        String sql = "INSERT INTO playlist_track (id_playlist, id_track) VALUES (?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, playlistId);
+            stmt.setInt(2, trackId);
+            stmt.executeUpdate();
         }
     }
 
-    
-    public List<Playlist> getPlaylistsByUser(int userId) {
+    public void removeSongFromPlaylist(int playlistId, int trackId) throws SQLException {
+        String sql = "DELETE FROM playlist_track WHERE id_playlist = ? AND id_track = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, playlistId);
+            stmt.setInt(2, trackId);
+            stmt.executeUpdate();
+        }
+    }
+
+    public List<Playlist> getUserPlaylists(int userId) throws SQLException {
         List<Playlist> playlists = new ArrayList<>();
-        String query = "SELECT * FROM playlists WHERE user_id = ?";
-
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, userId);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Playlist playlist = new Playlist(
-                    resultSet.getInt("id_playlist"),
-                    resultSet.getString("name"),
-                    resultSet.getInt("user_id")
-                );
-                playlists.add(playlist);
+        String sql = "SELECT * FROM playlist WHERE id_user = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Playlist p = new Playlist(rs.getInt("id_playlist"), rs.getString("name"), userId);
+                playlists.add(p);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return playlists;
     }
-    
-    
-    public List<Playlist> getAllPlaylists() {
-        List<Playlist> playlists = new ArrayList<>();
-        String query = "SELECT * FROM playlist";
-
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            while (resultSet.next()) {
-                Playlist playlist = new Playlist(
-                        resultSet.getInt("id_playlist"),
-                        resultSet.getString("nom"),
-                        resultSet.getInt("id_user")
-                );
-                playlists.add(playlist);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return playlists;
-    }
-    
-    
-    
-    public void deletePlaylist(int id_playlist) {
-        String query = "DELETE FROM playlist WHERE id_playlist = ?";
-
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, id_playlist);
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
