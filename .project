@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>RecoBe</name>
+=======
+	<name>ProjetRecoBeats</name>
+>>>>>>> 4d7ecc9cd46d8d203aa1d013f7ab9cff19dc8d3d
 	<comment></comment>
 	<projects>
 	</projects>
@@ -10,8 +14,20 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+<<<<<<< HEAD
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+=======
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+>>>>>>> 4d7ecc9cd46d8d203aa1d013f7ab9cff19dc8d3d
 	</natures>
 </projectDescription>

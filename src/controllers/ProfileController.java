@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package controllers;
 
 import javafx.fxml.FXML;
@@ -77,4 +78,9 @@ public class ProfileController {
 	        Router.navigateTo("/views/user.fxml");
 	    }
 
+=======
+
+public class ProfileController {
+
+>>>>>>> 4d7ecc9cd46d8d203aa1d013f7ab9cff19dc8d3d
 }

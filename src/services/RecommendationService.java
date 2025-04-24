@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package services;
 
 import models.Genre;
@@ -112,4 +113,9 @@ public class RecommendationService {
 		userProfile[9] = clickedSong.getDuration_ms();
 		return userProfile;
 	}
+=======
+
+public class RecommendationService {
+
+>>>>>>> 4d7ecc9cd46d8d203aa1d013f7ab9cff19dc8d3d
 }

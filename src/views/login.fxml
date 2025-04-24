@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
@@ -66,3 +67,6 @@
     </VBox>
 
 </AnchorPane>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+>>>>>>> 4d7ecc9cd46d8d203aa1d013f7ab9cff19dc8d3d

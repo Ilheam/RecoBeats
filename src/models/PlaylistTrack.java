@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package models;
 
 public class PlaylistTrack {
@@ -51,4 +52,9 @@ public class PlaylistTrack {
 		return "PlaylistTrack{" + "id=" + id + ", playlistId=" + playlistId + ", trackId=" + trackId + ", position="
 				+ position + '}';
 	}
+=======
+
+public class PlaylistTrack {
+
+>>>>>>> 4d7ecc9cd46d8d203aa1d013f7ab9cff19dc8d3d
 }
