@@ -1,148 +1,145 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+
 import models.Song;
 import services.SongService;
 import app.Router;
-import javafx.scene.control.Button;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import helpers.UserSession;
 
 import java.util.List;
 
 public class HomeController {
 
-    @FXML private TextField searchField;
-    @FXML private HBox songListContainer;
-    @FXML private ListView<Song> songListView;
+	@FXML
+	private TextField searchField;
+	@FXML
+	private HBox songListContainer;
+	@FXML
+	private ListView<Song> songListView;
+	@FXML
+	private VBox sideMenu;
+	@FXML
+	private ToggleButton menuButton;
 
-    private final SongService songService = new SongService();
+	private final SongService songService = new SongService();
 
-    public HomeController() {
-        System.out.println("HomeController initialisé !");
-    }
-    
-    
-    @FXML
-    public void initialize() {
-    	System.out.println("Méthode initialize() appelée !");
-        // Assurez-vous que l'élément est bien initialisé avant de l'utiliser
-        if (songListContainer == null) {
-            System.out.println("songListContainer is null!");
-        } else {
-        	System.out.println("Méthode initialize() appelée !");
-            loadAllSongs();  // Exemple d'appel de méthode
-        }
-    }
+	public HomeController() {
+		System.out.println("HomeController initialisé !");
+	}
 
-    private void loadAllSongs() {
-        List<Song> songs = songService.getAllSongs();
-        displaySongCards(songs);
-    }
+	@FXML
+	public void initialize() {
+		int userId = UserSession.getInstance().getCurrentUserId();
+		System.out.println("Connected user ID: " + userId);
 
-    private void displaySongCards(List<Song> songs) {
-        songListContainer.getChildren().clear();
-        for (Song song : songs) {
-            HBox card = createSongCard(song);
-            songListContainer.getChildren().add(card);
-        }
-    }
+		if (songListContainer == null) {
+			System.out.println("songListContainer is null!");
+		} else {
+			System.out.println("Méthode initialize() appelée !");
+			loadAllSongs();
+		}
+	}
 
-    private HBox createSongCard(Song song) {
-        HBox card = new HBox();
-        card.setSpacing(10);
+	private void loadAllSongs() {
+		List<Song> songs = songService.getAllSongs();
+		displaySongCards(songs);
+	}
 
-        // Image de la chanson
-        ImageView songImage = new ImageView(new Image(song.getImg_url()));
-        songImage.setFitHeight(100);
-        songImage.setFitWidth(100);
+	private void displaySongCards(List<Song> songs) {
+		songListContainer.getChildren().clear();
+		System.out.println("Affichage de " + songs.size() + " cartes de chansons");
+		for (Song song : songs) {
+			HBox card = createSongCard(song);
+			songListContainer.getChildren().add(card);
+		}
+	}
 
-        // Nom du track
-        Label songTitle = new Label(song.getTrack_name());
-        songTitle.setStyle("-fx-font-size: 16px; -fx-text-fill: #000000;");
+	private HBox createSongCard(Song song) {
+		HBox card = new HBox();
+		card.setSpacing(10);
 
-        // Layout pour afficher le tout
-        HBox hBox = new HBox(10, songImage, songTitle);
-        hBox.setStyle("-fx-padding: 10; -fx-border-radius: 10; -fx-background-color: #f0f0f0;");
-        hBox.setOnMouseClicked(event -> showSongDetails(song));
+		ImageView songImage = new ImageView(new Image(song.getImg_url()));
+		songImage.setFitHeight(100);
+		songImage.setFitWidth(100);
 
-        return hBox;
-    }
+		Label songTitle = new Label(song.getTrack_name());
+		songTitle.setStyle("-fx-font-size: 16px; -fx-text-fill: #ffffff;");
 
-    private void showSongDetails(Song song) {
-        // Ouvrir une nouvelle fenêtre ou section avec les détails de la chanson
-        // Vous pouvez utiliser un FXMLLoader pour charger un autre fichier FXML contenant les détails
-        System.out.println("Détails de la chanson: " + song.getTrack_name());
-    }
+		HBox hBox = new HBox(10, songImage, songTitle);
+		hBox.setStyle("-fx-padding: 15;" + "-fx-background-color: #2a3b8f;" + "-fx-background-radius: 12;"
+				+ "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 4);");
 
-    @FXML
-    private void handleSearch(KeyEvent event) {
-        String query = searchField.getText().toLowerCase();
-        List<Song> filteredSongs = songService.searchSongs(query);
-        displaySongCards(filteredSongs);
-    }
-    
-    
- // Lors du clic sur une chanson, navigate to song details
-    @FXML
-    public void handleSongSelection() {
-        Song selectedSong = songListView.getSelectionModel().getSelectedItem();
-        if (selectedSong != null) {
-            Router.navigateTo("/views/song_details.fxml");
-        }
-    }
-    
-    public void loadSongs() {
-        try {
-            // Connexion à la base de données (ajustez l'URL et les informations de connexion)
-            String url = "jdbc:mysql://localhost:3306/tracks_db";
-            String username = "root";
-            String password = "";
+		hBox.setOnMouseEntered(e -> hBox.setStyle("-fx-padding: 15;" + "-fx-background-color: #3d4fc9;"
+				+ "-fx-background-radius: 12;" + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 0, 5);"));
 
-            // Charger le driver JDBC (selon la base de données)
-            Connection connection = DriverManager.getConnection(url, username, password);
+		hBox.setOnMouseExited(e -> hBox.setStyle("-fx-padding: 15;" + "-fx-background-color: #2a3b8f;"
+				+ "-fx-background-radius: 12;" + "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 4);"));
 
-            // Créer une requête pour récupérer les chansons
-            String query = "SELECT * FROM songs"; // Assurez-vous que la table 'songs' existe dans votre BDD
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+		hBox.setOnMouseClicked(event -> handleSongSelection(song));
 
-            // Ajouter les boutons dynamiquement dans le HBox
-            while (resultSet.next()) {
-                String songName = resultSet.getString("name");
-                String artistName = resultSet.getString("artist");
+		return hBox;
+	}
 
-                System.out.println("Chanson récupérée : " + songName + " - " + artistName);
+	private void showSongDetails(Song song) {
+		System.out.println("Détails de la chanson: " + song.getTrack_name());
+	}
 
-                Button songButton = new Button(songName + " - " + artistName);
-                songButton.setOnAction(event -> {
-                    System.out.println("Chanson sélectionnée : " + songName);
-                });
+	@FXML
+	private void handleSearch(ActionEvent event) {
+		String query = searchField.getText().toLowerCase().trim();
+		if (!query.isEmpty()) {
+			List<Song> filteredSongs = songService.searchSongs(query);
+			displaySongCards(filteredSongs);
+		}
+	}
 
-                if (songListContainer == null) {
-                    System.out.println("songListContainer est NULL !");
-                } else {
-                    songListContainer.getChildren().add(songButton);
-                    System.out.println("Bouton ajouté pour : " + songName);
-                }
-            }
+	public void handleSongSelection(Song selectedSong) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/song_details.fxml"));
+			Parent root = loader.load();
 
+			SongDetailsController controller = loader.getController();
+			controller.setCurrentSong(selectedSong); // Envoie la chanson sélectionnée
 
-            // Fermer la connexion à la base de données
-            connection.close();
+			Scene scene = new Scene(root);
+			Stage stage = (Stage) searchField.getScene().getWindow();
+			stage.setScene(scene);
+			stage.show();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    
-    
+	@FXML
+	public void toggleMenu(ActionEvent event) {
+		double targetX = sideMenu.getLayoutX() == 0 ? -250 : 0;
+		sideMenu.setLayoutX(targetX);
+	}
+
+	@FXML
+	public void goToProfile() {
+		Router.navigateTo("/views/user.fxml");
+	}
+
+	@FXML
+	public void goToPlaylists() {
+		Router.navigateTo("/views/playlist.fxml");
+	}
+
+	@FXML
+	public void goToFavorites() {
+		Router.navigateTo("/views/favorite.fxml");
+	}
 }

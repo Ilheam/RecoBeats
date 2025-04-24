@@ -8,13 +8,15 @@ import services.AdminService;
 
 public class LoginAdminController {
 
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
+	@FXML
+	private TextField usernameField;
+	@FXML
+	private PasswordField passwordField;
 
-    private final AdminService adminService = new AdminService();
+	private final AdminService adminService = new AdminService();
 
-    @FXML
-    private void handleLogin() {
-       System.out.println("connexion réussite");
-    }
+	@FXML
+	private void handleLogin() {
+		System.out.println("connexion réussite");
+	}
 }

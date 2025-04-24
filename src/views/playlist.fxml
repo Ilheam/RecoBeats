@@ -1,9 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.PlaylistController">
-    <TextField fx:id="playlistNameField" promptText="Enter Playlist Name"/>
-    <ListView fx:id="playlistListView" />
-</VBox>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.PlaylistController"
+            prefWidth="1000" prefHeight="700"
+            style="-fx-background-color: #1e1e2f; -fx-font-family: 'Segoe UI';">
+
+    <!-- Flèche retour -->
+    <Button layoutX="20" layoutY="20" text="← Retour"
+            onAction="#handleBackToHome"
+            style="-fx-background-color: transparent; -fx-text-fill: white;
+                   -fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <VBox alignment="TOP_CENTER" spacing="20.0"
+          prefWidth="600" layoutX="200" layoutY="50">
+
+        <Label text="🎵 Gérer mes playlists"
+               style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+        <TextField fx:id="playlistNameField"
+                   promptText="Entrez un nom de playlist"
+                   prefWidth="300"
+                   style="-fx-background-color: #2a2a3d; -fx-text-fill: white;
+                          -fx-prompt-text-fill: #999; -fx-background-radius: 10;
+                          -fx-border-radius: 10; -fx-border-color: #3e5cb6;" />
+
+        <HBox spacing="10">
+            <Button text="Ajouter" onAction="#handleAddPlaylist"
+                    style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                           -fx-background-radius: 10; -fx-font-weight: bold;" />
+            <Button text="Mettre à jour" onAction="#handleUpdatePlaylist"
+                    style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                           -fx-background-radius: 10; -fx-font-weight: bold;" />
+            <Button text="Supprimer" onAction="#handleDeletePlaylist"
+                    style="-fx-background-color: #d9534f; -fx-text-fill: white;
+                           -fx-background-radius: 10; -fx-font-weight: bold;" />
+        </HBox>
+
+        <HBox spacing="30" alignment="CENTER">
+            <!-- Playlists List -->
+            <VBox spacing="10">
+                <Label text="📁 Mes playlists"
+                       style="-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;" />
+                <ListView fx:id="playlistListView"
+                          prefHeight="400" prefWidth="400"
+                          style="-fx-background-color: #2a2a3d; -fx-control-inner-background: #2a2a3d;
+                                 -fx-text-fill: white; -fx-font-size: 14px;
+                                 -fx-background-radius: 10; -fx-border-radius: 10;
+                                 -fx-border-color: #3e5cb6;" />
+            </VBox>
+
+            <!-- Songs in selected playlist -->
+            <VBox spacing="10">
+                <Label text="🎶 Chansons de la playlist sélectionnée"
+                       style="-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;" />
+                <ListView fx:id="songListView"
+                          prefHeight="400" prefWidth="400"
+                          style="-fx-background-color: #2a2a3d; -fx-control-inner-background: #2a2a3d;
+                                 -fx-text-fill: white; -fx-font-size: 14px;
+                                 -fx-background-radius: 10; -fx-border-radius: 10;
+                                 -fx-border-color: #3e5cb6;" />
+            </VBox>
+        </HBox>
+
+        <!-- Ajouter un morceau à la playlist -->
+<Button text="Ajouter à la playlist" onAction="#handleAddToPlaylist"
+        style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+               -fx-background-radius: 10; -fx-font-weight: bold;" 
+        maxWidth="200" alignment="CENTER"/>
+
+
+    </VBox>
+</AnchorPane>

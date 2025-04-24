@@ -16,16 +16,21 @@
       spacing="20"
       style="-fx-background-color: #121212; -fx-padding: 30;">
 
+    <!-- Flèche de retour -->
+    <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+        <Button text="← Retour" onAction="#goBackToHome"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px;"/>
+    </HBox>
+
     <!-- Section principale -->
-    <HBox spacing="40" alignment="CENTER"
-          style="-fx-background-color: transparent; -fx-padding: 20;">
+    <HBox spacing="40" alignment="CENTER" style="-fx-padding: 20;">
         
         <!-- Image de l'album -->
         <ImageView fx:id="trackImage" fitHeight="400" fitWidth="400" preserveRatio="true"
                    style="-fx-effect: dropshadow(gaussian, #000000, 20, 0.3, 5, 5);"/>
 
         <!-- Détails du morceau -->
-        <VBox spacing="20" alignment="TOP_LEFT" style="-fx-pref-width: 100%;">
+        <VBox spacing="20" alignment="TOP_LEFT" style="-fx-pref-width: 100%;"> 
 
             <Text fx:id="songTitle" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-fill: white;"/>
             <Text fx:id="artistName" style="-fx-font-size: 22px; -fx-fill: #b3b3b3;"/>
@@ -58,14 +63,14 @@
     </HBox>
 
     <!-- Liste des autres morceaux -->
-    <Label text="🎵 Autres morceaux" style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold;"/>
-    <ListView fx:id="otherTracksList" prefHeight="250" style="
-    -fx-background-color: #1e1e1e;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-padding: 10;
-    -fx-control-inner-background: #1e1e1e;
-    -fx-effect: dropshadow(gaussian, white, 10, 0.5, 2, 2);"/>
-
-
+    <Label text="🎵 Recommandé pour toi"
+           style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 0 0 0;"/>
+    
+    <ListView fx:id="otherTracksList" prefHeight="250"
+              style="-fx-background-color: #1e1e1e;
+                     -fx-border-radius: 10;
+                     -fx-background-radius: 10;
+                     -fx-padding: 10;
+                     -fx-control-inner-background: #1e1e1e;
+                     -fx-effect: dropshadow(gaussian, white, 10, 0.5, 2, 2);"/>
 </VBox>

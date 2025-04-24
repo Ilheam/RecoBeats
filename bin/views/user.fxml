@@ -3,48 +3,70 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.input.MouseEvent?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.shape.Circle?>
-
 <BorderPane xmlns:fx="http://javafx.com/javafx"
             xmlns="http://javafx.com/fxml"
             fx:controller="controllers.UserController"
-            stylesheets="@../styles/user.css"> <!-- Lien vers le fichier CSS -->
+            prefWidth="1000" prefHeight="700"
+            style="-fx-background-color: #1e1e2f; -fx-font-family: 'Segoe UI';">
 
-    <!-- Sidebar (Left) -->
+    <!-- SIDEMENU -->
     <left>
-       <VBox fx:id="sidebar" styleClass="sidebar">
-            <!-- Back Arrow in the Sidebar, now at the top-left -->
-            <Button text="&#8592;" styleClass="back-button" onAction="#goBack"/>
+      <VBox spacing="15" alignment="TOP_CENTER"
+      style="-fx-padding: 20; -fx-background-color: #2a2a3d; -fx-pref-width: 200;">
+    <Button text="⬅ Retour"
+            onAction="#handleBackToHome"
+            style="-fx-background-color: transparent; -fx-text-fill: white;
+                   -fx-font-size: 16px; -fx-font-weight: bold;" />
+    <Separator />
 
-            <!-- Sidebar Buttons -->
-            <Button text="Historique" styleClass="sidebar-button"/>
-            <Button text="Playlist" styleClass="sidebar-button"/>
-            <Button text="Favoris" styleClass="sidebar-button"/>
-        </VBox>
+    <Button text="🎵 Favoris"
+            onAction="#handleFavoriteButtonAction"
+            style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                   -fx-font-size: 14px; -fx-background-radius: 10;"
+            maxWidth="Infinity" maxHeight="Infinity"
+            prefHeight="40" />
+    
+    <Button text="📂 Playlist"
+            onAction="#handlePlayListButtonAction"
+            style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                   -fx-font-size: 14px; -fx-background-radius: 10;"
+            maxWidth="Infinity" maxHeight="Infinity"
+            prefHeight="40" />
+</VBox>
+
     </left>
 
-    <!-- Main content (Right) -->
+    <!-- Main content -->
     <center>
-        <VBox styleClass="main-content" spacing="15" alignment="TOP_LEFT">
-            <!-- Profile HBox with Circle, Username, and Edit Button -->
-            <HBox spacing="20" styleClass="profile-hbox" alignment="CENTER_LEFT">
-                <!-- Profile Image (Circle) -->
-               <StackPane>
-                    <Circle fx:id="profileImageCircle" radius="50" styleClass="profile-image"/>
-                    <Text fx:id="profileInitialText" styleClass="profile-initial"/>
+        <VBox spacing="30" alignment="TOP_CENTER"
+              style="-fx-padding: 40;">
+            <Label text="👤 Mon profil"
+                   style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+            <HBox spacing="30" alignment="CENTER_LEFT"
+                  style="-fx-background-color: #2a2a3d; -fx-padding: 30;
+                         -fx-background-radius: 15; -fx-border-radius: 15;
+                         -fx-border-color: #3e5cb6;">
+                <StackPane>
+                    <Circle fx:id="profileImageCircle" radius="50"
+                            style="-fx-fill: #3e5cb6;" />
+                    <Text fx:id="profileInitialText"
+                          style="-fx-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" />
                 </StackPane>
 
-                <VBox styleClass="user-info">
-                    <!-- Dynamic display for first name, last name, and username -->
-                    <Label fx:id="firstNameLabel" styleClass="user-name"/>
-                    <Label fx:id="lastNameLabel" styleClass="user-name"/>
-                    <Label fx:id="usernameLabel" styleClass="user-handle"/>
-                    <Button text="edit"  onAction="#handleEditButtonAction" styleClass="edit-button"/>
+                <VBox spacing="10">
+                    <Label fx:id="firstNameLabel"
+                           style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
+                    <Label fx:id="lastNameLabel"
+                           style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
+                    <Label fx:id="usernameLabel"
+                           style="-fx-text-fill: #aaaaaa; -fx-font-size: 16px;" />
+                    <Button text="Modifier" onAction="#handleEditButtonAction"
+                            style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                                   -fx-background-radius: 10; -fx-font-weight: bold;" />
                 </VBox>
-                
             </HBox>
         </VBox>
     </center>

@@ -3,24 +3,86 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?> 
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.RegisterController"
-            stylesheets="@../styles/register.css">
-    <!-- StackPane pour centrer la VBox dans la fenêtre -->
-    <StackPane AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
-               AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0">
+            style="-fx-background-color: #1e1e2f; -fx-font-family: 'Segoe UI';"
+            prefWidth="600" prefHeight="400">
+    
+    <!-- Flèche de retour en haut à gauche -->
+    <HBox fx:id="topBar" spacing="20" alignment="CENTER_LEFT"
+          AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0"
+          style="-fx-padding: 10;">
+        <Button fx:id="backButton" text="← Retour" onAction="#handleBackToWelcome"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px;"/>
+    </HBox>
+    
+    <!-- VBox centré dans l'AnchorPane -->
+    <VBox fx:id="registerVBox" spacing="15" alignment="CENTER" prefWidth="400" prefHeight="400"
+          AnchorPane.leftAnchor="100" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="50">
+        <Label text="Inscription" style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;" />
 
-        <!-- VBox centrée avec taille fixe -->
-        <VBox spacing="10" alignment="CENTER" prefWidth="400" prefHeight="400">
-            <Label text="Inscription" style="-fx-font-size: 24px;" />
+        <!-- TextField pour le nom avec taille fixe -->
+        <TextField fx:id="firstNameField" promptText="Nom" 
+                   style="-fx-background-color: white;
+                          -fx-text-fill: #333;
+                          -fx-prompt-text-fill: #3e5cb6;
+                          -fx-background-radius: 12;
+                          -fx-border-radius: 12;
+                          -fx-border-color: #3e5cb6;
+                          -fx-border-width: 2;
+                          -fx-padding: 10px 15px;
+                          -fx-effect: innershadow(gaussian, #000000, 5, 0.5, 0, 0, 2, 2);"
+                   prefWidth="300" minWidth="300" maxWidth="300"/>
 
-            <TextField fx:id="firstNameField" promptText="Nom" maxWidth="220" minWidth="220"/>
-            <TextField fx:id="lastNameField" promptText="Prénom" maxWidth="220" minWidth="220"/>
-            <TextField fx:id="userNameField" promptText="Nom d'utilisateur" maxWidth="220" minWidth="220"/>
-            <PasswordField fx:id="passwordField" promptText="Mot de passe" maxWidth="220" minWidth="220"/>
+        <!-- TextField pour le prénom avec taille fixe -->
+        <TextField fx:id="lastNameField" promptText="Prénom"
+                   style="-fx-background-color: white;
+                          -fx-text-fill: #333;
+                          -fx-prompt-text-fill: #3e5cb6;
+                          -fx-background-radius: 12;
+                          -fx-border-radius: 12;
+                          -fx-border-color: #3e5cb6;
+                          -fx-border-width: 2;
+                          -fx-padding: 10px 15px;
+                          -fx-effect: innershadow(gaussian, #000000, 5, 0.5, 0, 0, 2, 2);"
+                   prefWidth="300" minWidth="300" maxWidth="300"/>
 
-            <Button text="S'inscrire" onAction="#handleRegister" maxWidth="220" minWidth="220"/>
-            <Label fx:id="errorLabel" textFill="red"/>
-        </VBox>
-    </StackPane>
+        <!-- TextField pour le nom d'utilisateur avec taille fixe -->
+        <TextField fx:id="userNameField" promptText="Nom d'utilisateur"
+                   style="-fx-background-color: white;
+                          -fx-text-fill: #333;
+                          -fx-prompt-text-fill: #3e5cb6;
+                          -fx-background-radius: 12;
+                          -fx-border-radius: 12;
+                          -fx-border-color: #3e5cb6;
+                          -fx-border-width: 2;
+                          -fx-padding: 10px 15px;
+                          -fx-effect: innershadow(gaussian, #000000, 5, 0.5, 0, 0, 2, 2);"
+                   prefWidth="300" minWidth="300" maxWidth="300"/>
+
+        <!-- PasswordField pour le mot de passe avec taille fixe -->
+        <PasswordField fx:id="passwordField" promptText="Mot de passe"
+                       style="-fx-background-color: white;
+                              -fx-text-fill: #333;
+                              -fx-prompt-text-fill: #3e5cb6;
+                              -fx-background-radius: 12;
+                              -fx-border-radius: 12;
+                              -fx-border-color: #3e5cb6;
+                              -fx-border-width: 2;
+                              -fx-padding: 10px 15px;
+                              -fx-effect: innershadow(gaussian, #000000, 5, 0.5, 0, 0, 2, 2);"
+                       prefWidth="300" minWidth="300" maxWidth="300"/>
+
+        <!-- Button pour l'inscription -->
+        <Button text="S'inscrire" onAction="#handleRegister" maxWidth="220" minWidth="220"
+                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12 40;
+                       -fx-background-radius: 30;
+                       -fx-background-color:#3e5cb6;
+                       -fx-text-fill: white;
+                       -fx-cursor: hand;"/>
+
+        <!-- Label pour afficher les erreurs -->
+        <Label fx:id="errorLabel" textFill="red" />
+    </VBox>
 </AnchorPane>

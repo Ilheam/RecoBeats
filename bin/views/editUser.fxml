@@ -5,22 +5,56 @@
 <?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.ProfileController"
-            stylesheets="@../styles/edit.css"
-            prefWidth="400" prefHeight="500">
-    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        
-        <!-- Marge en haut uniquement pour le label -->
-<Label text="Édition du profil utilisateur" style="-fx-font-size: 16px; -fx-font-weight: bold;">
-    <VBox.margin>
-        <Insets top="0" bottom="0"/>
-    </VBox.margin>
-</Label>
+            style="-fx-background-color: #1e1e2f; -fx-font-family: 'Segoe UI';"
+            prefWidth="600" prefHeight="400">
 
-        
-        <TextField fx:id="firstNameField" promptText="Prénom" />
-        <TextField fx:id="lastNameField" promptText="Nom" />
-        <TextField fx:id="userNameField" promptText="Nom d'utilisateur" />
-    
-        <Button text="Mettre à jour" onAction="#handleUpdateProfile"/>
+    <!-- Flèche de retour en haut à gauche -->
+    <HBox fx:id="topBar" spacing="20" alignment="CENTER_LEFT"
+          AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          style="-fx-padding: 10;">
+        <Button fx:id="backButton" text="← Retour" onAction="#handleBackToUser"
+                style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px;"/>
+    </HBox>
+
+    <!-- Zone principale -->
+    <VBox alignment="CENTER" spacing="20"
+          AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+
+        <Label text="Édition du profil utilisateur"
+               style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+      <TextField fx:id="firstNameField" promptText="Prénom"
+           VBox.vgrow="NEVER"
+           prefWidth="300" minWidth="300" maxWidth="300"
+           style="-fx-background-color: white;
+                  -fx-text-fill: #333;
+                  -fx-prompt-text-fill: #3e5cb6;
+                  -fx-background-radius: 12;
+                  -fx-border-radius: 12;
+                  -fx-border-color: #3e5cb6;
+                  -fx-border-width: 2;
+                  -fx-padding: 10px 15px;
+                  -fx-effect: innershadow(gaussian, #000000, 5, 0.5, 0, 0, 2, 2);"/>
+
+      <TextField fx:id="lastNameField" promptText="Nom"
+           VBox.vgrow="NEVER"
+           prefWidth="300" minWidth="300" maxWidth="300"
+           style="-fx-background-color: white;
+                  -fx-text-fill: #333;
+                  -fx-prompt-text-fill: #3e5cb6;
+                  -fx-background-radius: 12;
+                  -fx-border-radius: 12;
+                  -fx-border-color: #3e5cb6;
+                  -fx-border-width: 2;
+                  -fx-padding: 10px 15px;
+                  -fx-effect: innershadow(gaussian, #000000, 5, 0.5, 0, 0, 2, 2);"/>
+
+        <Button text="Mettre à jour" onAction="#handleUpdateProfile"
+                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12 40;
+                       -fx-background-radius: 30; -fx-background-color: #3e5cb6;
+                       -fx-text-fill: white; -fx-cursor: hand;"
+                prefWidth="220" prefHeight="50"/>
     </VBox>
+
 </AnchorPane>

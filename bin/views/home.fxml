@@ -2,24 +2,73 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.HomeController"
-            prefWidth="800" prefHeight="600"
-            style="-fx-background-color: #F0F8FF;"> <!-- Fond bleu clair -->
+            prefWidth="1000" prefHeight="700"
+            style="-fx-background-color: #1e1e2f; -fx-font-family: 'Segoe UI';">
 
-    <!-- Titre -->
-    <Label text="Bienvenue sur Recobeats"
-           layoutX="20" layoutY="20"
-           style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <!-- Toggle Button (Hamburger) always visible -->
+    <Button layoutX="30" layoutY="25" text="☰"
+            style="-fx-font-size: 30px; -fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: transparent;"
+            onAction="#toggleMenu"/>
 
-    <!-- Conteneur de chansons -->
-    <ScrollPane layoutX="20" layoutY="70" prefWidth="760" prefHeight="500">
-        <HBox fx:id="songListContainer"
-              spacing="10"
-              alignment="CENTER_LEFT"
-              style="-fx-padding: 10;">
-            <!-- Les chansons seront ajoutées ici dynamiquement -->
-        </HBox>
-    </ScrollPane>
+    <!-- Main horizontal layout -->
+    <HBox layoutY="70" layoutX="0" prefWidth="1000" prefHeight="630">
 
+        <!-- Side Menu -->
+        <VBox fx:id="sideMenu"
+              alignment="TOP_LEFT"
+              spacing="20.0"
+              prefWidth="250"
+              style="-fx-background-color: #2a2a3d; -fx-effect: dropshadow(gaussian, #000000, 10, 0.3, 5, 5);">
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+            </padding>
+
+            <ImageView fx:id="menuIcon"
+                       fitHeight="30" fitWidth="30"
+                       style="-fx-cursor: hand; -fx-fill: white;" />
+            
+            <Button text="Profile" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 18px;" onAction="#goToProfile"/>
+            <Button text="Playlists" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 18px;" onAction="#goToPlaylists"/>
+            <Button text="Favorites" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 18px;" onAction="#goToFavorites"/>
+        </VBox>
+
+        <!-- Main Content Area -->
+        <VBox spacing="15.0" prefWidth="750">
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+            </padding>
+
+            <Label text="🎧 Bienvenue sur Recobeats"
+                   style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+<TextField fx:id="searchField"
+           promptText="🔍 Rechercher une chanson..."
+           style="-fx-background-color: #2a2a3d; -fx-text-fill: white;
+                  -fx-prompt-text-fill: #999;
+                  -fx-background-radius: 10; -fx-border-radius: 10;
+                  -fx-border-color: #3e5cb6;"
+           prefWidth="250"/>
+
+<Button layoutX="320" layoutY="80" text="Rechercher"
+        style="-fx-background-color: #3e5cb6; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10;"
+        onAction="#handleSearch"/>
+
+
+            <ScrollPane fitToWidth="true" fitToHeight="true"
+                        style="-fx-background-color: transparent;">
+                <HBox fx:id="songListContainer"
+                      spacing="15.0"
+                      style="-fx-background-color: transparent;">
+                    <padding>
+                        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+                    </padding>
+                    <!-- Les cartes de chansons seront ajoutées ici dynamiquement -->
+                </HBox>
+            </ScrollPane>
+        </VBox>
+    </HBox>
 </AnchorPane>

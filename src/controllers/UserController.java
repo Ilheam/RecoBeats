@@ -13,15 +13,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.User;
 import services.UserService;
-import services.Session;
+import helpers.UserSession; 
 
 import java.io.IOException;
 import java.util.List;
 
+import app.Router;
+
 public class UserController {
 
     private final UserService userService;
-    
+
     @FXML
     private Label firstNameLabel;  // Affiche le prénom
     @FXML
@@ -42,10 +44,7 @@ public class UserController {
     @FXML private ListView<String> favoritesListView;
     @FXML private ListView<String> historyListView;
 
-    @FXML private VBox sidebarMenu;  // Sidebar menu
-    @FXML private Button hamburgerButton;  // Hamburger button
-    @FXML private VBox sidebar; // Assure-toi d'ajouter fx:id="sidebar" à ton VBox dans le FXML
-
+    
     public UserController() {
         this.userService = new UserService();
     }
@@ -64,6 +63,21 @@ public class UserController {
             System.out.println("ID utilisateur invalide.");
         }
     }
+    
+    @FXML
+    private void handleBackToHome() {
+        Router.navigateTo("/views/home.fxml");
+    }
+    @FXML
+    private void handleBackToPlaylist() {
+        Router.navigateTo("/views/playlist.fxml");
+    }
+    @FXML
+    private void handleBackToFavorite() {
+        Router.navigateTo("/views/favorite.fxml");
+    }
+
+
     @FXML
     private void handleEditButtonAction(ActionEvent event) {
         try {
@@ -77,6 +91,33 @@ public class UserController {
         }
     }
 
+ 
+    
+    @FXML
+    private void handleFavoriteButtonAction(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/favorite.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handlePlayListButtonAction(ActionEvent event) {
+        try {
+        	System.out.println("playy");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/playlist.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void handleDisplayUserPlaylist() {
         try {
@@ -123,80 +164,70 @@ public class UserController {
         }
     }
 
-    @FXML
-    private void handleDisplayUserHistory() {
-        try {
-            int userId = Integer.parseInt(userIdField.getText());
-            List<String> history = userService.getUserHistory(userId);
-            historyListView.getItems().setAll(history);
-        } catch (NumberFormatException e) {
-            System.out.println("ID utilisateur invalide.");
-        }
-    }
+    
 
-    @FXML
-    private void handleUpdateUserHistory() {
-        try {
-            int userId = Integer.parseInt(userIdField.getText());
-            String song = historySongField.getText();
-            boolean success = userService.updateHistory(userId, song);
-            System.out.println(success ? "Historique mis à jour." : "Échec de la mise à jour.");
-        } catch (NumberFormatException e) {
-            System.out.println("ID utilisateur invalide.");
-        }
-    }
+ 
 
-    @FXML
-    private void toggleMenu() {
-        // Toggle the sidebar visibility
-        sidebarMenu.setVisible(!sidebarMenu.isVisible());
-    }
 
-    @FXML
-    private void goBack() {
-        // Logic to go back to the previous page
-        System.out.println("Going back to the previous page...");
-    }
-
+  
     // Fusion des deux méthodes initialize()
     @FXML
     public void initialize() {
         // Récupère l'utilisateur actuel depuis la session
-        User currentUser = Session.getCurrentUser();
+        int currentUserId = UserSession.getInstance().getCurrentUserId();  
         
-        if (currentUser != null) {
-            // Affiche le prénom, nom et le username
-            firstNameLabel.setText(currentUser.getFirstName());
-            lastNameLabel.setText(currentUser.getLastName());
-            usernameLabel.setText("@" + currentUser.getUserName());
+        if (currentUserId != 0) {  // Vérifie que l'utilisateur est connecté
+            User currentUser = userService.getUserProfile(currentUserId);  // Récupère l'utilisateur connecté
+            
+            if (currentUser != null) {
+                // Affiche le prénom, nom et le username
+                firstNameLabel.setText(currentUser.getFirstName());
+                lastNameLabel.setText(currentUser.getLastName());
+                usernameLabel.setText("@" + currentUser.getUserName());
 
-            // Affiche la première lettre du prénom dans le cercle
-            String firstLetter = currentUser.getUserName().substring(0, 1).toUpperCase();
-            profileInitialText.setText(firstLetter);
+                // Affiche la première lettre du prénom dans le cercle
+                String firstLetter = currentUser.getUserName().substring(0, 1).toUpperCase();
+                profileInitialText.setText(firstLetter);
+            } else {
+                System.out.println("Utilisateur non trouvé.");
+            }
         } else {
             System.out.println("Utilisateur non connecté.");
         }
 
-        // Gestion des boutons de la sidebar
-        for (var node : sidebar.getChildren()) {
-            if (node instanceof Button) {
-                Button button = (Button) node;
+      
+    }
 
-                // Appliquer le comportement au clic
-                button.setOnAction(event -> {
-                    clearSelection(); // Retirer la sélection précédente
-                    button.getStyleClass().add("selected"); // Ajouter la classe sélectionnée
-                });
-            }
+    
+    
+
+
+    @FXML
+    private void handleShowPlaylist(ActionEvent event) {
+        try {
+            // Charger la vue de la playlist
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/playlist.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    // Enlève "selected" de tous les boutons
-    private void clearSelection() {
-        for (var node : sidebar.getChildren()) {
-            if (node instanceof Button) {
-                node.getStyleClass().remove("selected");
-            }
+    @FXML
+    private void handleShowFavorites(ActionEvent event) {
+        try {
+            // Charger la vue des favoris
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/favorite.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 }

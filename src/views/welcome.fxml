@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.WelcomeController"
+           style="-fx-background-color: #191414;" prefWidth="600" prefHeight="400">
+    <VBox fx:id="vboxButtons" alignment="CENTER" spacing="15" prefWidth="500" prefHeight="300">
+    
+        <!-- Image circulaire -->
+        <ImageView fx:id="logoImage" fitWidth="200" fitHeight="200" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@/RECOBEATS.png" />
+            </image>
+        </ImageView>
+
+        <!-- Boutons -->
+        <VBox alignment="CENTER" spacing="15" prefWidth="500">
+            <Button text="Login" onAction="#handleLogin"
+                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12 40;
+                           -fx-background-radius: 30;
+                           -fx-background-color: #5F9EA0;
+                           -fx-text-fill: white;
+                           -fx-cursor: hand;"
+                    prefWidth="200" prefHeight="50"/>
+            <Button text="Register" onAction="#handleRegister"
+                    style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 12 40;
+                           -fx-background-radius: 30;
+                           -fx-background-color: #5F9EA0;
+                           -fx-text-fill: white;
+                           -fx-cursor: hand;"
+                    prefWidth="200" prefHeight="50"/>
+        </VBox>
+    </VBox>
+</StackPane>

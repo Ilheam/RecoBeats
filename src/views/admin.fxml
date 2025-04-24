@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns:fx="http://javafx.com/javafx"
+            xmlns="http://javafx.com/fxml"
+            fx:controller="controllers.AdminDashboardController"
+            prefWidth="1000" prefHeight="700"
+            style="-fx-background-color: #1e1e2f; -fx-font-family: 'Segoe UI';">
+
+    <!-- SIDEMENU -->
+    <left>
+        <VBox spacing="15" alignment="TOP_CENTER"
+              style="-fx-padding: 20; -fx-background-color: #2a2a3d; -fx-pref-width: 200;">
+            <Button text="⬅ Retour"
+                    onAction="#handleBackToLogin"
+                    style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                           -fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Separator />
+            <Button text="🎵 DashSongs"
+                    onAction="#handleBackToSongs"
+                    style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                           -fx-font-size: 14px; -fx-background-radius: 10; -fx-cursor: hand;"
+                    maxWidth="Infinity" prefHeight="40" />
+            <Button text="👤 DashUsers"
+                    onAction="#handleBackToUsers"
+                    style="-fx-background-color: #3e5cb6; -fx-text-fill: white;
+                           -fx-font-size: 14px; -fx-background-radius: 10; -fx-cursor: hand;"
+                    maxWidth="Infinity" prefHeight="40" />
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <VBox spacing="30" alignment="TOP_CENTER"
+              style="-fx-padding: 40;">
+            <Label text="👤 Mon profil"
+                   style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
+            <HBox spacing="30" alignment="CENTER_LEFT"
+                  style="-fx-background-color: #2a2a3d; -fx-padding: 30;
+                         -fx-background-radius: 15; -fx-border-radius: 15;
+                         -fx-border-color: #3e5cb6;">
+                <StackPane alignment="CENTER">
+                    <Circle fx:id="profileImageCircle" radius="50"
+                            style="-fx-fill: #3e5cb6;" />
+                    <Label fx:id="profileInitialText" text="A"
+                           style="-fx-text-fill: white; -fx-font-size: 28px;
+                                  -fx-font-weight: bold;" />
+                </StackPane>
+                <VBox spacing="10">
+                    <Label fx:id="firstNameLabel" text="Admin"
+                           style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" />
+                    <Label fx:id="usernameLabel" text="RecoBeats"
+                           style="-fx-text-fill: #aaaaaa; -fx-font-size: 16px;" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

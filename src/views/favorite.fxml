@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.FavoriteController">
-    <ListView fx:id="favoriteListView" />
-</VBox>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.FavoriteController"
+            prefWidth="1000" prefHeight="700"
+            style="-fx-background-color: #1e1e2f; -fx-font-family: 'Segoe UI';">
+
+    <!--  Bouton retour -->
+    <Button layoutX="20" layoutY="20" text="← Retour"
+            onAction="#handleBackToHome"
+            style="-fx-background-color: transparent; -fx-text-fill: white;
+                   -fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <VBox layoutX="200" layoutY="50" spacing="20" alignment="TOP_CENTER"
+          prefWidth="600">
+
+        <Label text="🎵 Mes chansons favorites"
+               style="-fx-font-size: 28px; -fx-text-fill: white; -fx-font-weight: bold;" />
+
+        <ListView fx:id="favoriteListView"
+                  prefHeight="500" prefWidth="600"
+                  style="-fx-background-color: #2a2a3d; -fx-control-inner-background: #2a2a3d;
+                         -fx-text-fill: white; -fx-font-size: 14px;
+                         -fx-background-radius: 10; -fx-border-radius: 10;
+                         -fx-border-color: #3e5cb6;" />
+    </VBox>
+</AnchorPane>
